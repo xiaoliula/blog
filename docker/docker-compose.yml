@@ -1,0 +1,58 @@
+version: '3'
+services:
+  p-nginx:
+    image: nginx:latest
+    container_name: nginx
+    environment:
+      TZ: Asia/Shanghai
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - D:/study/demo/poetize/docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - D:/study/demo/poetize/ssl:/home/poetize/ssl
+      - D:/study/demo/poetize/file:/home/poetize/file
+      - D:/study/demo/poetize/poetize-ui:/home/poetize/poetize-ui
+      - D:/study/demo/poetize/poetize-im-ui:/home/poetize/poetize-im-ui
+    networks:
+      - mynet
+
+  p-mysql:
+    image: mysql:8.0.31
+    container_name: mysql
+    ports:
+      - "3309:3306"
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_ROOT_PASSWORD: poetize
+      MYSQL_ROOT_HOST: "%"
+    volumes:
+      - D:/study/demo/poetize/mysql/data:/var/lib/mysql
+    command:
+      --default-authentication-plugin=mysql_native_password
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_general_ci
+      --bind-address=0.0.0.0
+    networks:
+      - mynet
+
+  p-server:
+    build: .
+    container_name: poetize-server
+    environment:
+      TZ: Asia/Shanghai
+      USERNAME: root
+      PASSWORD: poetize
+    ports:
+      - "465:465"
+    volumes:
+      - D:/study/demo/poetize/poetize-server:/home/poetize/poetize-server
+      - D:/study/demo/poetize/logs:/home/poetize/logs
+      - D:/study/demo/poetize/file:/home/poetize/file
+      - D:/study/demo/poetize/poetry.sql:/home/poetize/poetry.sql
+    depends_on:
+      - p-mysql
+    networks:
+      - mynet
+networks:
+  mynet:
