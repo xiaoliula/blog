@@ -1,0 +1,387 @@
+/* 通用css */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    color: var(--fontColor);
+    font-family: var(--globalFont), serif;
+    word-break: break-word;
+    overflow-x: hidden; /* 隐藏横向滚动条 */
+}
+
+
+/* 图片 */
+.background-image {
+    width: 100vw;
+    height: 100vh;
+    /* 固定位置，不随滚动条滚动 */
+    position: fixed;
+    z-index: -1;
+}
+
+.background-image::before {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .2);
+    content: '';
+}
+
+.background-image-error {
+    background-color: var(--lightGreen);
+    width: 100vw;
+    height: 100vh;
+    /* 固定位置，不随滚动条滚动 */
+    position: fixed;
+    z-index: -1;
+}
+
+/* 模块化背景色及透明度 */
+.background-opacity {
+    background: var(--background);
+    opacity: 0.88;
+}
+
+.my-el-image {
+    width: 100%;
+    height: 100%;
+}
+
+.my-el-image .image-slot {
+    width: 100%;
+    height: 100%;
+}
+
+/* 遮罩 */
+.poem-image::before {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: var(--translucent);
+    content: "";
+}
+
+.user-avatar {
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+    user-select: none;
+}
+
+.user-avatar:hover {
+    transform: rotate(360deg);
+}
+
+/* 整个滚动条的样式设置（适用于 WebKit 浏览器，如 Chrome、Safari 等） */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+/* 滚动条轨道（即滚动条的背景部分）的样式设置 */
+::-webkit-scrollbar-track {
+    /* 设置滚动条轨道的背景颜色，这里使用了 rgba 颜色模式，代表一个带有透明度的颜色，具体为浅蓝色且透明度为 0.2 */
+    background-color: rgba(73, 177, 245, 0.2);
+}
+
+/* 滚动条滑块（即用于拖动的部分）的样式设置 */
+::-webkit-scrollbar-thumb {
+    /* 设置滚动条滑块的背景颜色，这里为浅蓝色 */
+    background-color: #49b1f5;
+    /* 为滚动条滑块添加一个线性渐变背景图像，用于增加视觉效果 */
+    background-image: linear-gradient(
+            45deg,
+            rgba(255, 255, 255, 0.4) 25%,
+            transparent 25%,
+            transparent 50%,
+            rgba(255, 255, 255, 0.4) 50%,
+            rgba(255, 255, 255, 0.4) 75%,
+            transparent 75%,
+            transparent
+    );
+    /* 设置滚动条滑块的圆角半径为 1em（相对单位，会根据元素的字体大小等因素自适应调整），使其看起来更圆润 */
+    border-radius: 1em;
+}
+
+/* 针对 el-select-dropdown 类下的 el-popper 元素内部滚动条的特殊设置 */
+.el-select-dropdown.el-popper ::-webkit-scrollbar {
+    /* 隐藏该元素内部的滚动条，可能是出于特定的页面布局或设计需求 */
+    display: none;
+}
+
+/* 选中样式 */
+::selection {
+    background: var(--lightGreen);
+    color: var(--white);
+}
+
+/* 居中 */
+.myCenter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.transformCenter {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* 两边 */
+.myBetween {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* 阴影 */
+.shadow-box-mini {
+    box-shadow: 1px 1px 3px var(--mask);
+}
+
+.shadow-box {
+    box-shadow: 0 1px 20px -6px var(--borderColor);
+    transition: all 0.3s ease;
+}
+
+.shadow-box:hover {
+    box-shadow: 0 5px 10px 5px var(--borderHoverColor);
+}
+
+/* el弹出框样式 */
+.el-message{
+    top: 80px !important;
+    border: 0;
+    justify-content: center; /* 居中内容 */
+    min-width: 0;
+}
+
+.el-message *:not(.el-message__icon)  {
+    color: var(--white) !important;
+    font-weight: 600;
+}
+
+.el-message__icon {
+    color: white !important;
+}
+
+.el-message--success,
+.el-message--warning,
+.el-message--error {
+    background: var(--el-message-bg);
+}
+
+.el-message--success {
+    --el-message-bg: var(--el-message--success);
+}
+
+.el-message--warning {
+    --el-message-bg: var(--el-message--warning);
+}
+
+.el-message--error {
+    --el-message-bg: var(--el-message--error);
+}
+
+
+/* 看板娘 */
+#waifu-toggle, #waifu {
+    z-index: 100;
+}
+
+#waifu-toggle.waifu-toggle-active {
+    margin-left: -40px !important;
+}
+
+#waifu-tips {
+    border: unset;
+    animation: unset;
+    width: 200px;
+    min-height: 60px;
+}
+
+#waifu-tool {
+    right: -10px;
+    bottom: 20px;
+    top: unset;
+}
+
+#waifu #live2d {
+    height: 250px;
+    width: 250px;
+}
+
+/* 图标旋转 */
+.iconRotate {
+    animation: rotate 2s linear infinite;
+}
+
+/* 树洞留言 */
+.baberrage-item .baberrage-msg {
+    padding-right: 5px;
+}
+
+.baberrage-item .normal .baberrage-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+.el-upload.el-upload--picture, .el-upload.el-upload--text {
+    width: 100%;
+}
+
+.el-upload-dragger {
+    width: 100% !important;
+    height: 100px !important;
+}
+
+/* 导航栏 */
+.toolbarDrawer {
+    position: relative;
+    background: var(--toolbar) center center / cover no-repeat;
+    letter-spacing: 3px;
+}
+
+.toolbarDrawer .el-drawer__header {
+    font-size: 22px;
+    color: var(--white);
+    text-align: center;
+    position: relative;
+}
+
+.toolbarDrawer::before {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: var(--maxMask);
+    content: "";
+}
+
+.small-menu {
+    color: var(--white);
+    font-size: 20px;
+    user-select: none;
+    position: relative;
+}
+
+.small-menu > li {
+    list-style: none;
+    line-height: 40px;
+    cursor: pointer;
+}
+
+.el-tooltip__popper.is-light {
+    background: var(--lightGreen);
+    border-radius: 10px;
+    color: var(--white);
+    padding: 12px 20px;
+    letter-spacing: 1px;
+    font-weight: 600;
+    line-height: 1.5;
+    font-size: 1.2rem;
+    border: unset;
+}
+
+.el-tooltip__popper .popper__arrow {
+    border-style: unset;
+}
+
+.message-index {
+    z-index: 3000 !important;
+}
+
+.admin-content .pagination {
+    overflow-y: auto;
+    max-width: 100%;
+}
+
+/* 通用样式：所有弹窗都适用 */
+.el-dialog {
+    width: 60%; /* 默认宽度 */
+    max-width: 1000px; /* 限制最大宽度 */
+    min-width: 300px; /* 限制最小宽度 */
+    border-radius: 12px; /* 柔和的圆角 */
+    margin: 10vh auto; /* 居中显示，顶部适当留白 */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* 添加阴影增强窗口质感 */
+    background-color: #fff; /* 背景颜色 */
+    transition: all 0.3s ease; /* 动画过渡效果 */
+}
+
+/* 弹窗标题样式 */
+.el-dialog__title {
+    font-weight: 600; /* 加粗标题 */
+    font-size: 1.2rem; /* 合适的字体大小 */
+    text-align: center; /* 标题居中 */
+    margin-bottom: 10px; /* 与内容适当间距 */
+}
+
+/* 弹窗内容样式 */
+.el-dialog__body {
+    padding: 8px 10px; /* 减小左右内边距，减少左右空白 */
+    font-size: 0.95rem; /* 稍微减小字体，适应更多内容 */
+    line-height: 1.5; /* 行间距 */
+    color: #333; /* 字体颜色 */
+    overflow: hidden; /* 防止溢出 */
+}
+
+/* 弹窗内容图片优化 */
+.el-dialog__body img {
+    max-width: 100%; /* 图片自适应宽度 */
+    height: auto; /* 保持比例 */
+}
+
+/* 屏幕宽度小于800px */
+@media screen and (max-width: 800px) {
+    .el-dialog {
+        width: 70%;
+    }
+}
+
+/* 屏幕宽度小于600px */
+@media screen and (max-width: 600px) {
+    .el-dialog {
+        width: 80%;
+        border-radius: 10px; /* 缩小圆角 */
+    }
+}
+
+/* 屏幕宽度小于400px */
+@media screen and (max-width: 400px) {
+    .el-dialog {
+        width: 90%;
+        border-radius: 8px; /* 缩小圆角 */
+        padding: 10px; /* 缩小内边距，适应小屏 */
+    }
+}
+
+/* 专属样式：文章复制弹窗 */
+.article-copy .el-dialog {
+    border-radius: 15px; /* 更大的圆角 */
+    margin-top: 5vh;
+    padding: 20px;
+}
+
+/* 专属样式：文章复制弹窗内容 */
+.article-copy .el-dialog__body {
+    padding: 15px 20px 25px; /* 调整内边距 */
+}
+
+/* 专属样式：首页推送弹窗 */
+.index-push .el-dialog {
+    border-radius: 15px;
+    margin-top: 10vh;
+    background-color: #f9f9f9; /* 更柔和的背景色 */
+}
+
+/* 专属样式：首页推送弹窗标题 */
+.index-push .el-dialog__title {
+    font-weight: bold;
+    font-size: 1.3rem; /* 更突出标题 */
+    color: #333; /* 深色标题 */
+    text-align: center;
+}
